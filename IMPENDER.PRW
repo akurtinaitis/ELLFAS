@@ -14,7 +14,7 @@
 =====================================================================================
 |Programa: IMPENDER    |Autor: Fontanelli                          |Data: 13/07/2020|
 =====================================================================================
-|Descrição: Importa informações de endereço no cadastro de produto                  |
+|Descricao: Importa informacoes de endereco para o SB1 (Cadastro de produtos)   |
 |                                                                                   |
 =====================================================================================
 */
@@ -23,23 +23,23 @@ user function IMPENDER()
 	Local aSays 		:= {}
 	Local aButtons		:= {}
 	Local nOpca 		:= 0
-	Local cCadastro		:= "Importação de Endereço do Produto"
+	Local cCadastro		:= "Importaï¿½ï¿½o de Endereï¿½o do Produto"
 	Local cFileOpen 	:= ""
 
 	Private cTitulo := "Planilha"
 
-	AADD(aSays, "Este Programa ira importar uma planilha padrão CSV."	)
+	AADD(aSays, "Este Programa ira importar uma planilha padrï¿½o CSV."	)
 	AADD(aSays, "" 	)
 	AADD(aSays, ""	)
 	AADD(aSays, ""	)
 	AADD(aSays, ""	)
 
-	//Insere os botões na tela e adiciona funções a eles.
+	//Insere os botï¿½es na tela e adiciona funï¿½ï¿½es a eles.
 	AADD(aButtons, { 1,.T.,{|| nOpca:= 1, FechaBatch() 			}} )
 	AADD(aButtons, { 2,.T.,{|| nOpca:= 0, FechaBatch() 			}} )
 	aAdd(aButtons, { 5,.T.,{|| nOpca:= 2, SelArq(@cFileOpen) }} )
 
-	//Cria a tela com os botões.
+	//Cria a tela com os botï¿½es.
 	FormBatch( cCadastro, aSays, aButtons )
 
 	If nOpca == 0 .Or. Empty(Alltrim(cFileOpen))
@@ -57,7 +57,7 @@ Return
 =====================================================================================
 |Programa: SelArq      |Autor: Fontanelli                          |Data: 13/07/2020|
 =====================================================================================
-|Descrição: Importa informações de endereço no cadastro de produto                  |
+|Descriï¿½ï¿½o: Importa informaï¿½ï¿½es de endereï¿½o no cadastro de produto                  |
 |                                                                                   |
 =====================================================================================
 */
@@ -66,7 +66,7 @@ Static Function SelArq(cFileOpen)
 	Local cTitulo  	:= "Selecione o Arquivo"
 	Local cExtens   := ""
 
-	//cExtens   += "Planilha padrão CSV | *.cst | "
+	//cExtens   += "Planilha padrï¿½o CSV | *.cst | "
 	cExtens   += "Todos os Arquivos  | *.* | "
 
 	//Seleciona o Local do arquivo                 
@@ -83,7 +83,7 @@ Return(cFileOpen)
 =====================================================================================
 |Programa: Importar    |Autor: Fontanelli                          |Data: 13/07/2020|
 =====================================================================================
-|Descrição: Importa informações de endereço no cadastro de produto                  |
+|Descriï¿½ï¿½o: Importa informaï¿½ï¿½es de endereï¿½o no cadastro de produto                  |
 |                                                                                   |
 =====================================================================================
 */
@@ -98,7 +98,7 @@ Static Function Importar(cFile)
 	cArqLER  := cFile
 	
 	If !File(cArqLER)
-		MsgAlert("Arquivo: "+cArqLER+" não localizado","Atenção !")
+		MsgAlert("Arquivo: "+cArqLER+" nï¿½o localizado","Atenï¿½ï¿½o !")
 	Endif
 
 	If File(cArqLER)
@@ -116,7 +116,7 @@ Static Function Importar(cFile)
 			Cpo01:= Substr(cBuffer,1,nReg - 1); cBuffer := Substr(cBuffer,nReg+1); nReg := At(";",cBuffer) 	// [01] Produto
 			Cpo01:= Cpo01
 
-			// [02] Endereço
+			// [02] Endereï¿½o
 			If At(";",cBuffer) > 0
 				Cpo02 := Substr(cBuffer,1,nReg - 1)															
 				Cpo02 := Cpo02
@@ -126,7 +126,7 @@ Static Function Importar(cFile)
 			EndIf
 			
 			Aadd(aVetTr,{	Cpo01,; // [01] Produto
-							Cpo02,; // [02] Endereço
+							Cpo02,; // [02] Endereï¿½o
 						})
 			
 			FT_FSkip()
@@ -148,12 +148,12 @@ Static Function Importar(cFile)
 						SB1->B1_XENDER := aVetTr[nP][2]	
 						MsUnLock()
 					else
-						MsgAlert("Produto "+aVetTr[nP][1]+" não encontrado.","Atenção !")
+						MsgAlert("Produto "+aVetTr[nP][1]+" nï¿½o encontrado.","Atenï¿½ï¿½o !")
 					endif
 		
 			Next nP
 
-			MsgAlert("Arquivo: "+cArqLER+" processado.","Atenção !")
+			MsgAlert("Arquivo: "+cArqLER+" processado.","Atenï¿½ï¿½o !")
 			
 		endIf
 		
